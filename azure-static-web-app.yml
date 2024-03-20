@@ -1,0 +1,54 @@
+name: Product Development Client App
+
+pr:
+  branches:
+    include:
+      - develop
+      - main
+trigger:
+  branches:
+    include:
+      - develop
+      - main
+jobs:
+- job: build_and_deploy_job
+  displayName: Build and Deploy Job
+  condition: or(eq(variables['Build.Reason'], 'Manual'),or(eq(variables['Build.Reason'], 'PullRequest'),eq(variables['Build.Reason'], 'IndividualCI')))
+  pool:
+    vmImage: ubuntu-latest
+  variables:
+  - group: pd-tool-client-app-dev-variable-group
+  steps:
+  - checkout: self
+    submodules: true
+  # - task: Bash@3
+  #   inputs:
+  #     targetType: 'inline'
+  #     script: |        
+  #       cd VisualComfort.ProductDevelopment.ClientApp
+  #       npm install 
+  #       npm run build
+  #   env:      
+  #     REACT_APP_AD_AUTHORITY: $(REACT_APP_AD_AUTHORITY)
+  #     REACT_APP_AD_GRAPH_URI: $(REACT_APP_AD_GRAPH_URI)
+  #     REACT_APP_AD_REDIRECT_URI: $(REACT_APP_AD_REDIRECT_URI)
+  #     REACT_APP_AD_SCOPE: $(REACT_APP_AD_SCOPE)
+  #     REACT_APP_API_URL: $(REACT_APP_API_URL)
+  #     REACT_APP_REACT_AD_CLIENT_ID: $(REACT_APP_REACT_AD_CLIENT_ID)
+  - task: AzureStaticWebApp@0
+    inputs:
+      azure_static_web_apps_api_token: $(AZURE_STATIC_WEB_APPS_API_TOKEN_YELLOW_DESERT_0A033F40F)
+###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+# For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+      app_location: "/VisualComfort.ProductDevelopment.ClientApp" # App source code path
+      api_location: "" # Api source code path - optional
+      output_location: "build" # Built app content directory - optional
+    env:      
+      REACT_APP_AD_AUTHORITY: $(REACT_APP_AD_AUTHORITY)
+      REACT_APP_AD_GRAPH_URI: $(REACT_APP_AD_GRAPH_URI)
+      REACT_APP_AD_REDIRECT_URI: $(REACT_APP_AD_REDIRECT_URI)
+      REACT_APP_AD_SCOPE: $(REACT_APP_AD_SCOPE)
+      REACT_APP_API_URL: $(REACT_APP_API_URL)
+      REACT_APP_REACT_AD_CLIENT_ID: $(REACT_APP_REACT_AD_CLIENT_ID)
+###### End of Repository/Build Configurations ######
+

@@ -1,0 +1,12 @@
+{
+	"routes": [		
+	],
+	"navigationFallback": {
+		"rewrite": "/index.html"
+	},
+	"responseOverrides": {
+		"404": {
+			"rewrite": "/"
+		}
+	}
+}
