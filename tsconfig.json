@@ -23,17 +23,34 @@
     "jsx": "react-jsx"
   },
   "typedocOptions": {
+    /* Specifies the entry points to be documented by TypeDoc */
     "entryPoints": [
       "src/**/*.tsx",
       "src/*.tsx",
       "src/*.ts",
       "src/**/*.ts"
     ],
+    /*Exclude the following files from the documentation */
+    "exclude": [
+      "src/*.{css,jpg,svg}",
+      "src/{react-app-env.d,reportWebVitals}.ts"
+    ],
+    /* Specifies the location the html documentation should be written to */
     "out": "docs",
+    /* Specifies the location to output a JSON file containing all of the reflection data */
     "json": "jsonReport",
+    /* Set the name of the project that will be used in the header of the template */
     "name": "TypeDoc for VC product-design",
+    /* accept all types of comments */
     "commentStyle": "all",
-    "categorizeByGroup": "true"
+    "groupOrder": [
+      "Variables",
+      "Functions",
+      "Classes",
+      "Interfaces",
+      "Enums",
+      "Type Aliases"
+    ],
   },
   "include": [
     "src"
